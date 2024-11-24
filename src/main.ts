@@ -1,5 +1,6 @@
 import { DisplayMode, Engine, Color } from "excalibur";
 import { loader } from "./loader";
+import { Player } from "./player";
 // import { Paddle } from "./paddle";
 // import { Ball } from "./ball";
 //assignment - add two balls that move in different directions and recreate sprites from mock as
@@ -15,26 +16,22 @@ class MainGame extends Engine {
   }
 
   initialize() {
-    // const paddle1 = new Paddle({ x: 500, y: 500, colorOfBar: Color.Red });
-    // this.add(paddle1);
-
-    // const paddle2 = new Paddle({ x: 100, y: 100, colorOfBar: Color.Orange });
-    // this.add(paddle2);
-
     // this.input.pointers.primary.on("move", (e) => {
     //   paddle1.pos.x = e.worldPos.x;
     // });
 
-    // const ball1 = new Ball({
-    //   x: 500,
-    //   y: 300,
-    //   colorOfBall: Color.Black,
-    // });
-    // this.add(ball1);
+    const player = new Player({
+      x: 176,
+      y: 224,
+      colorOfPlayer: Color.fromRGB(0, 0, 0),
+    });
+    this.add(player);
+
+    // this.input.
 
     this.start(loader);
   }
 }
 
 const game = new MainGame();
-game.initialize();
+game.initialize(); //fancy version of start
