@@ -1,5 +1,6 @@
-import { Actor, Engine, Color, Vector, vec } from "excalibur";
+import { Actor, Engine, Color, Vector, vec, CollisionType } from "excalibur";
 import { startingPosition } from "./startingPosition";
+import { Resources } from "./resources";
 
 export class Player extends Actor {
     constructor() {
@@ -10,6 +11,7 @@ export class Player extends Actor {
             width: 16,
             height: 16,
             color: Color.fromRGB(0, 80, 80),
+            collisionType: CollisionType.Active
         });
     }
 
@@ -23,6 +25,8 @@ export class Player extends Actor {
 
     //once the game initializes, the follower function will initialize with it
     onInitialize(engine: Engine): void {
+        this.graphics.add(Resources.playerImage.toSprite());
+        
         engine.input.pointers.primary.on('down', (event) => {
             const clickedPosition = event.worldPos;
             this.setLocationAsFollow(clickedPosition);
