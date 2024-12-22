@@ -1,40 +1,49 @@
 import { DisplayMode, Engine, Color } from "excalibur";
-import { loader } from "./loader";
-import { Paddle } from "./paddle";
-import { Ball } from "./ball";
-//assignment - add two balls that move in different directions and recreate sprites from mock as
-//temperory Actors
+import { loader } from "./resources";
+import { Player } from "./player";
+import { Townsfolk } from "./townsfolk";
+import { Monster } from "./monster";
+// import { MonsterEggs } from "./monster";
+
 class MainGame extends Engine {
   constructor() {
+    const scaleHori = 4;
+    const scaleVert = 3;
     super({
-      width: 1920,
-      height: 1080,
+      width: 480 * scaleHori,
+      height: 360 * scaleVert,
+      antialiasing: false,
       displayMode: DisplayMode.FitScreen,
-      backgroundColor: Color.White,
+      backgroundColor: Color.fromRGB(72,111,56),
     });
   }
 
   initialize() {
-    const paddle1 = new Paddle({ x: 500, y: 500, colorOfBar: Color.Red });
-    this.add(paddle1);
+    const player = new Player();    
+    this.add(player);
 
-    const paddle2 = new Paddle({ x: 100, y: 100, colorOfBar: Color.Orange });
-    this.add(paddle2);
-
-    this.input.pointers.primary.on("move", (e) => {
-      paddle1.pos.x = e.worldPos.x;
+    const townsfolkOne = new Townsfolk({
+          x: 512,
+          y: 256,
+          colorOfNPC: Color.Red
     });
+    this.add(townsfolkOne);
 
-    const ball1 = new Ball({
-      x: 500,
-      y: 300,
-      colorOfBall: Color.Black,
+    const monsterOne = new Monster({
+      x: 768,
+      y: 256,
+      colorOfMonster: Color.Red
+    })
+    this.add(monsterOne);
+
+    monsterOne.graphics.opacity = 0;
+    townsfolkOne.on("pointerdown", () => {
+      monsterOne.graphics.opacity = 1;
     });
-    this.add(ball1);
-
+    
     this.start(loader);
   }
 }
 
 const game = new MainGame();
-game.initialize();
+game.initialize(); //fancy version of start
