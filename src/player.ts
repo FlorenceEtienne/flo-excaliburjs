@@ -38,8 +38,6 @@ export class Player extends Actor {
             .callMethod(() => {
                 this.isMoving = false;
             });
-
-            // if()
         });
     }
 

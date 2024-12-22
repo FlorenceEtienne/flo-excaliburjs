@@ -1,9 +1,10 @@
-import { DisplayMode, Engine, Color } from "excalibur";
+import { DisplayMode, Engine, Color, Keys} from "excalibur";
 import { loader } from "./resources";
 import { Player } from "./player";
 import { Townsfolk } from "./townsfolk";
 import { Monster } from "./monster";
-// import { MonsterEggs } from "./monster";
+import { WinningText } from "./text";
+import { Instructions } from "./text";
 
 class MainGame extends Engine {
   constructor() {
@@ -36,10 +37,34 @@ class MainGame extends Engine {
     })
     this.add(monsterOne);
 
+    const winningText = new WinningText();
+    this.add(winningText);
+
+    const instructions = new Instructions();
+    this.add(instructions);
+
+    winningText.graphics.opacity = 0;
+
     monsterOne.graphics.opacity = 0;
     townsfolkOne.on("pointerdown", () => {
       monsterOne.graphics.opacity = 1;
     });
+
+    monsterOne.on("pointerdown", () => {
+      monsterOne.graphics.opacity = 0;
+      player.graphics.opacity = 0;
+      townsfolkOne.graphics.opacity = 0;
+      instructions.graphics.opacity = 0;
+      winningText.graphics.opacity = 1;
+    });
+
+    if (this.input.keyboard.isHeld(Keys.R)) {
+      monsterOne.graphics.opacity = 1;
+      player.graphics.opacity = 1;
+      townsfolkOne.graphics.opacity = 1;
+      instructions.graphics.opacity = 1;
+      winningText.graphics.opacity = 0;
+    }
     
     this.start(loader);
   }
