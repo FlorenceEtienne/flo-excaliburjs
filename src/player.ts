@@ -8,8 +8,8 @@ export class Player extends Actor {
 
         super({
             pos: position,
-            width: 16,
-            height: 16,
+            width: 64*2,
+            height: 64*2,
             color: Color.fromRGB(0, 80, 80),
             collisionType: CollisionType.Active
         });
@@ -25,7 +25,9 @@ export class Player extends Actor {
 
     //once the game initializes, the follower function will initialize with it
     onInitialize(engine: Engine): void {
-        this.graphics.add(Resources.playerImage.toSprite());
+        const playerSprite = Resources.playerImage.toSprite();
+        playerSprite.scale = vec(5, 5);
+        this.graphics.add(playerSprite);
         
         engine.input.pointers.primary.on('down', (event) => {
             const clickedPosition = event.worldPos;
@@ -36,6 +38,8 @@ export class Player extends Actor {
             .callMethod(() => {
                 this.isMoving = false;
             });
+
+            // if()
         });
     }
 
@@ -49,4 +53,16 @@ export class Player extends Actor {
         this.vel = vec(0, 0); //velocity isn't there
         this.acc = vec(0, 0); //acceleration isn't there
     }
+}
+
+export class Alexis extends Actor {
+    constructor() {
+        super({
+            x: 0,
+            y: 1080,
+            width: 64,
+            height: 64
+        })
+    }
+    
 }
